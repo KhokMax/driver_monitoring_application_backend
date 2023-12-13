@@ -6,5 +6,5 @@ import requests
 # res = requests.post("http://127.0.0.1:3000/driver", json=data)
 # print(res.json())
 
-res = requests.delete("http://127.0.0.1:3000/driver/70bcf8e8-7c6c-49fb-b076-736ae655b487")
+res = requests.delete("http://127.0.0.1:3000/driver/b4ecc474-f071-4494-8005-7e5970b02ad9")
 print(res.json())
