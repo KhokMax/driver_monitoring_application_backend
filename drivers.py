@@ -81,3 +81,21 @@ class Drivers(Resource):
             return {"Exeption": "404"}
         
         return {"Response": "200"}
+    
+    
+    def delete(self, user_id):
+        
+        try:
+            engine = create_engine("postgresql+psycopg2://postgres:IvNa2023OlKh@34.168.253.165:5432/postgres")
+            connection = engine.connect()
+
+            sql_query = f"DELETE FROM users WHERE user_id = '{user_id}'"
+            connection.execute(text(sql_query))
+
+            connection.commit()
+            connection.close()
+
+        except:
+            return {"Exeption": "404"}
+        
+        return {"Response": "200"}
