@@ -8,9 +8,10 @@ from  drivers import *
 
 app = Flask(__name__)
 api = Api()
-
+CORS(app)
 # conn = psycopg2.connect(host="34.168.253.165", port="5432", dbname="postgres", password="IvNa2023OlKh", user="postgres")
 # cursor = conn.cursor()
+
 
 
 class Main(Resource):
