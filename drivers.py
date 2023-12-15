@@ -66,6 +66,7 @@ class Drivers(Resource):
     
 
     def delete(self, user_id):
+        print("dewdewdewdew")
         
         try:
             engine = create_engine("postgresql+psycopg2://postgres:IvNa2023OlKh@34.168.253.165:5432/postgres")

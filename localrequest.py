@@ -6,5 +6,5 @@ import requests
 # res = requests.post("http://127.0.0.1:3000/driver", json=data)
 # print(res.json())
 
-res = requests.delete("http://127.0.0.1:3000/driver/b4ecc474-f071-4494-8005-7e5970b02ad9")
-print(res.json())
+res = requests.delete("https://driver-monitoring-application-d48766f2cbe0.herokuapp.com:5000/driver/b4ecc474-f071-4494-8005-7e5970b02ad9")
+print(res)
