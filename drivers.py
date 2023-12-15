@@ -69,7 +69,7 @@ class Drivers(Resource):
         print("dewdewdewdew")
         
         try:
-            engine = create_engine("postgresql+psycopg2://postgres:IvNa2023OlKh@34.168.253.165:5432/postgres")
+            engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
             connection = engine.connect()
 
             sql_query = f"DELETE FROM users WHERE user_id = '{user_id}'"
