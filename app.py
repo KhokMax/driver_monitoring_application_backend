@@ -8,7 +8,8 @@ from  drivers import *
 
 app = Flask(__name__)
 api = Api(app)  # Передайте екземпляр вашого Flask застосунку в конструктор Api
-CORS(app)  # Використовуйте CORS для вашого застосунку
+CORS(app, origins="*")  # Використовуйте CORS для вашого застосунку
+
 
 class Main(Resource):
     def get(self):
