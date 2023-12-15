@@ -1,3 +1,5 @@
+#postgresql+psycopg2://postgres:IvNa2023OlKh@34.168.253.165:5432/postgres
+
 get_all_deliveries = """
 SELECT *,
 	CASE 

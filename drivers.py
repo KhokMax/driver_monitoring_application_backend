@@ -9,7 +9,7 @@ from  queries import *
 class Drivers(Resource):
 
     def create_user(self, login, password):
-        engine = create_engine("postgresql+psycopg2://postgres:IvNa2023OlKh@34.168.253.165:5432/postgres")
+        engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
         connection = engine.connect()
         sql_query = f"INSERT INTO users (user_id, login, user_password) VALUES (:user_id, :login, :user_password)"
         user_id = str(uuid.uuid4())
@@ -43,7 +43,7 @@ class Drivers(Resource):
 
 
         try:
-            engine = create_engine("postgresql+psycopg2://postgres:IvNa2023OlKh@34.168.253.165:5432/postgres")
+            engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
             connection = engine.connect()
 
             sql_query = f"INSERT INTO drivers ({', '.join(column_list)}) VALUES ({', '.join(':' + item for item in column_list)})"
