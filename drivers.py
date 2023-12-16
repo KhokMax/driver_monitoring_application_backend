@@ -91,4 +91,4 @@ class Drivers(Resource):
             print(e)
             return {"Exeption": "404"}
 
-        return df.to_json(orient="index")
+        return df.to_json(orient="records")
