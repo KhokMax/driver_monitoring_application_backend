@@ -55,6 +55,6 @@ class Deliveries(Resource):
             print(e)
             return {"Exeption": "404"}
         
-        return {"deliveries": df.to_json(orient="records")}
+        return {'"deliveries"': df.to_json(orient="records")}
 
         

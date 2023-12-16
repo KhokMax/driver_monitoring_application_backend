@@ -70,4 +70,4 @@ class Vehicles(Resource):
             print(e)
             return {"Exeption": "404"}
         
-        return {"vehicles": df.to_json(orient="records")}
+        return {'"vehicles"': df.to_json(orient="records")}
