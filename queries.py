@@ -58,3 +58,19 @@ ON operations_facts.driver_id = operations_facts.driver_id
 GROUP BY operations_facts.driver_id) as operations_facts_1
 ON drivers.user_id = operations_facts_1.driver_id
 WHERE alive_flag = true"""
+
+
+select_all_vehicles = """select vehicles.vehicle_id, vehicle_name, max_distance, fuel_per_100_km, capacity_kg, license_category, vehicle_category, 
+	CASE
+		WHEN delivery_status = 'in progress'
+			THEN 'in progress' 
+		ELSE 'free' 
+	END as current_status
+	from vehicles left outer join (SELECT operations_facts.vehicle_id, MAX(operations_facts.delivery_status) as delivery_status from operations_facts inner join
+									   (SELECT vehicle_id, max(operation_date + operation_time) as max_date FROM operations_facts
+										   GROUP BY vehicle_id) as operations_facts_info
+ON operations_facts.vehicle_id = operations_facts.vehicle_id
+ AND operations_facts_info.max_date = operations_facts.operation_date + operations_facts.operation_time
+GROUP BY operations_facts.vehicle_id) as operations_facts_1
+ON vehicles.vehicle_id = operations_facts_1.vehicle_id
+WHERE alive_flag = true"""

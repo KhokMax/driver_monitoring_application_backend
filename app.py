@@ -5,13 +5,14 @@ import pandas as pd
 from sqlalchemy import create_engine
 from  queries import *
 from  drivers import *
+from  vehicles import *
 
 
-# app = Flask(__name__)
-# api = Api()
 app = Flask(__name__)
-api = Api(app)  # Передайте екземпляр вашого Flask застосунку в конструктор Api
-CORS(app, origins="*")  # Використовуйте CORS для вашого застосунку
+api = Api()
+# app = Flask(__name__)
+# api = Api(app)  # Передайте екземпляр вашого Flask застосунку в конструктор Api
+# CORS(app, origins="*")  # Використовуйте CORS для вашого застосунку
 
 
 class Main(Resource):
@@ -23,8 +24,9 @@ class Main(Resource):
 
 api.add_resource(Main, "/main")
 api.add_resource(Drivers, "/driver", "/driver/<user_id>", "/drivers")
+api.add_resource(Vehicles, "/vehicle", "/vehicle/<vehicle_id>", "/vehicles")
 
-# api.init_app(app)
+api.init_app(app)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host='0.0.0.0')

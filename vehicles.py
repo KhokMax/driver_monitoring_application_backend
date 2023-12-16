@@ -6,22 +6,15 @@ from flask_restful import Resource
 from sqlalchemy import create_engine, text, exc
 from  queries import *
 
-class Drivers(Resource):
+class Vehicles(Resource):
 
     def post(self):
         try:
-            login = request.json.get('login', None)
-            password = request.json.get('password', None)
+            vehicle_id = str(uuid.uuid4())
 
-            user_id = self.create_user(login, password)
+            column_list = ["vehicle_id", "vehicle_name", "max_distance", "fuel_per_100_km", "capacity_kg", "license_category", "vehicle_category"]
 
-            column_list = ['driver_first_name', 'driver_last_name', 'driver_patronymic',
-                            'driver_age', 'driver_rank', 'mobile_phone', 'mail', 'a1_category',
-                            'a_category', 'b1_category', 'b_category', 'c1_category', 'c_categoty',
-                            'd1_categoty', 'd_category', 'c1e_category', 'be_category', 'ce_category',
-                            'd1e_category', 'de_category', "user_id"]
-
-            values = [user_id if item == "user_id" else request.json.get(item, None) for item in column_list]
+            values = [vehicle_id if item == "vehicle_id" else request.json.get(item, None) for item in column_list]
         except:
             return {"Exeption": "404"}
 
@@ -30,7 +23,7 @@ class Drivers(Resource):
             engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
             connection = engine.connect()
 
-            sql_query = f"INSERT INTO drivers ({', '.join(column_list)}) VALUES ({', '.join(':' + item for item in column_list)})"
+            sql_query = f"INSERT INTO VEHICLES ({', '.join(column_list)}) VALUES ({', '.join(':' + item for item in column_list)})"
             connection.execute(text(sql_query), dict(zip(column_list, values)))
 
             connection.commit()
@@ -50,13 +43,12 @@ class Drivers(Resource):
         return {"Response": "200"}
     
 
-    def delete(self, user_id):
-        
+    def delete(self, vehicle_id):
         try:
             engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
             connection = engine.connect()
 
-            sql_query = f"UPDATE DRIVERS SET alive_flag = false WHERE user_id = '{str(user_id)}'"
+            sql_query = f"UPDATE VEHICLES SET alive_flag = false WHERE vehicle_id = '{str(vehicle_id)}'"
             connection.execute(text(sql_query))
 
             connection.commit()
@@ -71,5 +63,5 @@ class Drivers(Resource):
     def get(self):
         engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
         connection = engine.connect()
-        df = pd.read_sql(select_all_drivers, connection)
+        df = pd.read_sql(select_all_vehicles, connection)
         return df.to_json(orient="index")

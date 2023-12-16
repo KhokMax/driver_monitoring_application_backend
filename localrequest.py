@@ -24,5 +24,20 @@ import requests
 # res = requests.get("https://driver-monitoring-application-d48766f2cbe0.herokuapp.com/main")
 # print(res.json())
 
-res = requests.get("http://127.0.0.1:5000/drivers")
+# res = requests.get("http://127.0.0.1:5000/drivers")
+# print(res.json())
+
+# res = requests.get("https://driver-monitoring-application-d48766f2cbe0.herokuapp.com/drivers")
+# print(res.json())
+
+
+# data = {'vehicle_name': "tankNahui", 'max_distance':1000, 'fuel_per_100_km': 11.5, 'capacity_kg': 300, 'license_category': 'C1', 'vehicle_category': 'tank'}
+# res = requests.post("http://127.0.0.1:5000/vehicle", json=data)
+# print(res.json())
+
+# res = requests.delete("http://127.0.0.1:5000/vehicle/1")
+# print(res.json())
+
+
+res = requests.get("http://127.0.0.1:5000/vehicles")
 print(res.json())
