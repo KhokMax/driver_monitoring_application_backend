@@ -55,7 +55,8 @@ class Drivers(Resource):
             connection.close()
             return {"Exeption": "data error"}
         
-        except:
+        except Exception as e:
+            print(e)
             connection.rollback()
             connection.close()
             return {"Exeption": "404"}
@@ -81,3 +82,9 @@ class Drivers(Resource):
             return {"Exeption": "404"}
         
         return {"Response": "200"}
+    
+    def get(self):
+        engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
+        connection = engine.connect()
+        df = pd.read_sql(select_all_drivers, connection)
+        return df.to_json(orient="index")

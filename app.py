@@ -22,7 +22,7 @@ class Main(Resource):
         return df.to_json(orient="index")
 
 api.add_resource(Main, "/main")
-api.add_resource(Drivers, "/driver", "/driver/<user_id>")
+api.add_resource(Drivers, "/driver", "/driver/<user_id>", "/drivers")
 
 # api.init_app(app)
 
