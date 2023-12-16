@@ -10,11 +10,11 @@ from  deliveries import *
 
 
 
-app = Flask(__name__)
-api = Api()
 # app = Flask(__name__)
-# api = Api(app)  # Передайте екземпляр вашого Flask застосунку в конструктор Api
-# CORS(app, origins="*")  # Використовуйте CORS для вашого застосунку
+# api = Api()
+app = Flask(__name__)
+api = Api(app)  # Передайте екземпляр вашого Flask застосунку в конструктор Api
+CORS(app, origins="*")  # Використовуйте CORS для вашого застосунку
 
 
 class Main(Resource):
@@ -29,7 +29,7 @@ api.add_resource(Drivers, "/driver", "/driver/<user_id>", "/drivers")
 api.add_resource(Vehicles, "/vehicle", "/vehicle/<vehicle_id>", "/vehicles")
 api.add_resource(Deliveries, "/delivery", "/deliveries")
 
-api.init_app(app)
+# api.init_app(app)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host='0.0.0.0')
