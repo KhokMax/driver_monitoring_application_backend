@@ -5,15 +5,19 @@ from flask_restful import Resource
 from sqlalchemy import create_engine, text, exc
 from  queries import *
 
-class Vehicles(Resource):
+class Deliveries(Resource):
 
     def post(self):
         try:
-            vehicle_id = str(uuid.uuid4())
+            login = request.json.get('login', None)
+            password = request.json.get('password', None)
 
-            column_list = ["vehicle_id", "vehicle_name", "max_distance", "fuel_per_100_km", "capacity_kg", "license_category", "vehicle_category"]
+            delivery_id = str(uuid.uuid4())
 
-            values = [vehicle_id if item == "vehicle_id" else request.json.get(item, None) for item in column_list]
+            column_list = ['delivery_name', 'delivery_description', 'deadline', 'shipfrom_longitude', 'shipfrom_latitude',
+                           'shipto_longitude', 'shipto_latitude', 'shipto_address', 'shipfrom_address', 'vehicle_id', 'driver_id']
+
+            values = [delivery_id if item == "delivery_id" else request.json.get(item, None) for item in column_list]
         except Exception as e:
             print(e)
             return {"Exeption": "404"}
@@ -23,7 +27,7 @@ class Vehicles(Resource):
             engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
             connection = engine.connect()
 
-            sql_query = f"INSERT INTO VEHICLES ({', '.join(column_list)}) VALUES ({', '.join(':' + item for item in column_list)})"
+            sql_query = f"INSERT INTO deliveries ({', '.join(column_list)}) VALUES ({', '.join(':' + item for item in column_list)})"
             connection.execute(text(sql_query), dict(zip(column_list, values)))
 
             connection.commit()
@@ -42,26 +46,9 @@ class Vehicles(Resource):
         
         return {"Response": "200"}
     
-
-    def delete(self, vehicle_id):
-        try:
-            engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
-            connection = engine.connect()
-
-            sql_query = f"UPDATE VEHICLES SET alive_flag = false WHERE vehicle_id = '{str(vehicle_id)}'"
-            connection.execute(text(sql_query))
-
-            connection.commit()
-            connection.close()
-
-        except Exception as e:
-            print(e)
-            return {"Exeption": "404"}
-        
-        return {"Response": "200"}
     
     def get(self):
         engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
         connection = engine.connect()
-        df = pd.read_sql(select_all_vehicles, connection)
+        df = pd.read_sql(select_all_drivers, connection)
         return df.to_json(orient="index")

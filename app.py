@@ -6,6 +6,8 @@ from sqlalchemy import create_engine
 from  queries import *
 from  drivers import *
 from  vehicles import *
+from  deliveries import *
+
 
 
 app = Flask(__name__)
@@ -25,6 +27,7 @@ class Main(Resource):
 api.add_resource(Main, "/main")
 api.add_resource(Drivers, "/driver", "/driver/<user_id>", "/drivers")
 api.add_resource(Vehicles, "/vehicle", "/vehicle/<vehicle_id>", "/vehicles")
+api.add_resource(Deliveries, "/delivery", "/deliveries")
 
 api.init_app(app)
 

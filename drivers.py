@@ -1,12 +1,24 @@
 import pandas as pd
 import uuid
-import psycopg2
 from flask import request
 from flask_restful import Resource
 from sqlalchemy import create_engine, text, exc
 from  queries import *
 
 class Drivers(Resource):
+
+    def create_user(self, login, password):
+        engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
+        connection = engine.connect()
+        sql_query = f"INSERT INTO users (user_id, login, user_password) VALUES (:user_id, :login, :user_password)"
+        user_id = str(uuid.uuid4())
+        connection.execute(text(sql_query), {'user_id': user_id, 'login':login, 'user_password': password})
+
+        connection.commit()
+        connection.close()
+
+        return user_id
+        
 
     def post(self):
         try:
@@ -22,7 +34,8 @@ class Drivers(Resource):
                             'd1e_category', 'de_category', "user_id"]
 
             values = [user_id if item == "user_id" else request.json.get(item, None) for item in column_list]
-        except:
+        except Exception as e:
+            print(e)
             return {"Exeption": "404"}
 
 
