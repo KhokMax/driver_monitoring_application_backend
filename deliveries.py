@@ -11,7 +11,7 @@ class Deliveries(Resource):
         try:
             delivery_id = str(uuid.uuid4())
 
-            column_list = ['delivery_name', 'delivery_description', 'deadline', 'shipfrom_longitude', 'shipfrom_latitude',
+            column_list = ["delivery_id", 'delivery_name', 'delivery_description', 'deadline', 'shipfrom_longitude', 'shipfrom_latitude',
                            'shipto_longitude', 'shipto_latitude', 'shipto_address', 'shipfrom_address', 'vehicle_id', 'driver_id']
 
             values = [delivery_id if item == "delivery_id" else request.json.get(item, None) for item in column_list]
@@ -49,7 +49,7 @@ class Deliveries(Resource):
         try:
             engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
             connection = engine.connect()
-            df = pd.read_sql(select_all_drivers, connection)
+            df = pd.read_sql(get_all_deliveries, connection)
             
         except Exception as e:
             print(e)
