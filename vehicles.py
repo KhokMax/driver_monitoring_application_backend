@@ -65,6 +65,7 @@ class Vehicles(Resource):
             engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
             connection = engine.connect()
             df = pd.read_sql(select_all_vehicles, connection)
+            connection.close()
         except Exception as e:
             print(e)
             return {"Exeption": "404"}
