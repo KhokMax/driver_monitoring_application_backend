@@ -1,5 +1,6 @@
 import pandas as pd
 import uuid
+import json
 from flask import request
 from flask_restful import Resource
 from sqlalchemy import create_engine, text, exc
@@ -55,9 +56,17 @@ class Vehicles(Resource):
     def get(self):
         try:
             with create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb").connect() as connection:
-                df = pd.read_sql(select_all_vehicles, connection)
+                try:
+                    df = pd.read_sql(select_all_vehicles, connection)
+                except Exception as e:
+                    print(e)
+                    return {"Exception": "404", "Description": "Database interaction error"}
+            
+            data = json.loads(df.to_json(orient="records"))
+            result_json_str = json.dumps({"drivers": data}) 
+                
         except Exception as e:
             print(e)
             return {"Exeption": "404"}
         
-        return {'"vehicles"': df.to_json(orient="records")}
+        return result_json_str

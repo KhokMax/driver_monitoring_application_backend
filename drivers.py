@@ -70,7 +70,6 @@ class Drivers(Resource):
 
     def get(self):
         try:
-
             with create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb").connect() as connection:
                 try:
                     df = pd.read_sql(select_all_drivers, connection)
@@ -84,6 +83,5 @@ class Drivers(Resource):
         except Exception as e:
             print(e)
             return {"Exception": "404"}
-        
          
         return result_json_str
