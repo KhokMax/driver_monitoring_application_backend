@@ -78,20 +78,12 @@ class Drivers(Resource):
                     print(e)
                     return {"Exception": "404", "Description": "Database interaction error"}
                 
+            data = json.loads(df.to_json(orient="records"))
+            result_json_str = json.dumps({"drivers": data}) 
+                
         except Exception as e:
             print(e)
             return {"Exception": "404"}
         
-        # Отримати рядок JSON з DataFrame
-        json_records = df.to_json(orient="records")
-
-        # Розпакувати рядок JSON у вигляді об'єкта Python
-        data = json.loads(json_records)
-
-        # Створити новий словник з ключем "drivers"
-        result_dict = {"drivers": data}
-
-        # Перетворити словник у рядок JSON
-        result_json_str = json.dumps(result_dict)  # indent для читабельності
-
+         
         return result_json_str
