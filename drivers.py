@@ -92,6 +92,6 @@ class Drivers(Resource):
         result_dict = {"drivers": data}
 
         # Перетворити словник у рядок JSON
-        result_json_str = json.dumps(result_dict, indent=2)  # indent для читабельності
+        result_json_str = json.dumps(result_dict)  # indent для читабельності
 
         return result_json_str
