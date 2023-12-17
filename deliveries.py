@@ -15,42 +15,28 @@ class Deliveries(Resource):
                            'shipto_longitude', 'shipto_latitude', 'shipto_address', 'shipfrom_address', 'vehicle_id', 'driver_id']
 
             values = [delivery_id if item == "delivery_id" else request.json.get(item, None) for item in column_list]
-        except Exception as e:
-            print(e)
-            return {"Exeption": "404"}
-
-
-        try:
-            engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
-            connection = engine.connect()
-
             sql_query = f"INSERT INTO deliveries ({', '.join(column_list)}) VALUES ({', '.join(':' + item for item in column_list)})"
-            connection.execute(text(sql_query), dict(zip(column_list, values)))
 
-            connection.commit()
-            connection.close()
-
-        except exc.IntegrityError:
-            connection.rollback()
-            connection.close()
-            return {"Exeption": "data error"}
+            with create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb").connect() as connection:
+                try:
+                    connection.execute(text(sql_query), dict(zip(column_list, values)))
+                    connection.commit()
+                except Exception as e:
+                    connection.rollback()
+                    print(e)
+                    return {"Exception": "404", "Description": "Database interaction error"}
         
         except Exception as e:
-            print(e)
-            connection.rollback()
-            connection.close()
-            return {"Exeption": "404"}
-        
+                print(e)
+                return {"Exeption": "404"}
+
         return {"Response": "200"}
     
     
     def get(self):
-
         try:
-            engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
-            connection = engine.connect()
-            df = pd.read_sql(get_all_deliveries, connection)
-            connection.close()
+            with create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb").connect() as connection:
+                df = pd.read_sql(get_all_deliveries, connection)
         except Exception as e:
             print(e)
             return {"Exeption": "404"}
