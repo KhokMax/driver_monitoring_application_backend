@@ -3,7 +3,7 @@ import uuid
 import json
 from flask import request
 from flask_restful import Resource
-from sqlalchemy import create_engine, text, exc
+from sqlalchemy import create_engine, text, exc, pool
 from queries import select_all_drivers
 
 class Drivers(Resource):
@@ -70,7 +70,7 @@ class Drivers(Resource):
 
     def get(self):
         try:
-            engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
+            engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb", poolclass=pool.QueuePool)
             connection = engine.connect()
             
             df = pd.read_sql(select_all_drivers, connection)
