@@ -3,7 +3,7 @@ import uuid
 import json
 from flask import request
 from flask_restful import Resource
-from sqlalchemy import create_engine, text, exc
+from sqlalchemy import create_engine, text, exc, pool
 from  queries import *
 
 class Deliveries(Resource):
@@ -36,20 +36,28 @@ class Deliveries(Resource):
     
     def get(self):
         try:
-            with create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb").connect() as connection:
-                try:
-                    df = pd.read_sql(get_all_deliveries, connection)
-                except Exception as e:
-                    print(e)
-                    return {"Exception": "404", "Description": "Database interaction error"}
-                
+            engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb", poolclass=pool.QueuePool)
+            connection = engine.connect()
+            
+            df = pd.read_sql(get_all_deliveries, connection)
+            
             data = json.loads(df.to_json(orient="records"))
-            result_json_str = json.dumps({"drivers": data}) 
+            result_json_str = json.dumps({"drivers": data})
 
+            connection.close()
+            engine.dispose()
+                
         except Exception as e:
+            try:
+                connection.close()
+                engine.dispose()
+            except Exception as e:
+                print(e)
+                return {"Exception": "404"}
+            
             print(e)
-            return {"Exeption": "404"}
-        
+            return {"Exception": "404"}
+         
         return result_json_str
 
         
