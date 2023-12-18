@@ -7,6 +7,7 @@ from  queries import *
 from  drivers import *
 from  vehicles import *
 from  deliveries import *
+from  users import *
 
 
 
@@ -28,6 +29,7 @@ api.add_resource(Main, "/main")
 api.add_resource(Drivers, "/driver", "/driver/<user_id>", "/drivers")
 api.add_resource(Vehicles, "/vehicle", "/vehicle/<vehicle_id>", "/vehicles")
 api.add_resource(Deliveries, "/delivery", "/deliveries")
+api.add_resource(Users, "/user/<login>,<password>")
 
 # api.init_app(app)
 

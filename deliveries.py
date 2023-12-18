@@ -50,7 +50,7 @@ class Deliveries(Resource):
             df = pd.read_sql(get_all_deliveries, connection)
             
             data = json.loads(df.to_json(orient="records"))
-            result_json_str = json.dumps({"drivers": data})
+            result_json_str = json.dumps({"deliveries": data})
 
             connection.close()
             engine.dispose()
