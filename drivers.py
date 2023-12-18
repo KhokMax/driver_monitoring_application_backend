@@ -78,7 +78,7 @@ class Drivers(Resource):
             data = json.loads(df.to_json(orient="records"))
             result_json_str = json.dumps({"drivers": data}) 
             connection.close()
-            engine.dispose(False)    
+            engine.dispose()    
         except Exception as e:
             print(e)
             return {"Exception": "404"}
