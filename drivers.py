@@ -70,16 +70,15 @@ class Drivers(Resource):
 
     def get(self):
         try:
-            with create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb").connect() as connection:
-                try:
-                    df = pd.read_sql(select_all_drivers, connection)
-                except Exception as e:
-                    print(e)
-                    return {"Exception": "404", "Description": "Database interaction error"}
-                
+            engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb")
+            connection = engine.connect()
+            
+            df = pd.read_sql(select_all_drivers, connection)
+            
             data = json.loads(df.to_json(orient="records"))
             result_json_str = json.dumps({"drivers": data}) 
-                
+            connection.close()
+            engine.dispose(True)    
         except Exception as e:
             print(e)
             return {"Exception": "404"}

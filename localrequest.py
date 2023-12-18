@@ -24,8 +24,8 @@ import requests
 # res = requests.get("https://driver-monitoring-application-d48766f2cbe0.herokuapp.com/main")
 # print(res.json())
 
-res = requests.get("http://127.0.0.1:5000/drivers")
-print(res.json())
+# res = requests.get("http://127.0.0.1:5000/drivers")
+# print(res.json())
 
 res = requests.get("https://driver-monitoring-application-d48766f2cbe0.herokuapp.com/drivers")
 print(res.json())
