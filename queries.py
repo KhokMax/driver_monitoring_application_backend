@@ -93,3 +93,9 @@ ON operations_facts.vehicle_id = operations_facts.vehicle_id
 GROUP BY operations_facts.vehicle_id) as operations_facts_1
 ON vehicles.vehicle_id = operations_facts_1.vehicle_id
 WHERE alive_flag = true"""
+
+
+change_delivery_status = """INSERT INTO operations_facts (vehicle_id, vehicle_status, driver_id, delivery_id, delivery_status, operation_date, operation_time)
+SELECT vehicle_id, 'Good', driver_id, delivery_id, '{}', CURRENT_DATE + INTERVAL '2 hours', CURRENT_TIME + INTERVAL '2 hours'
+FROM deliveries
+WHERE delivery_id = '{}'"""

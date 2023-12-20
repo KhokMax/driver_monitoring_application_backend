@@ -74,7 +74,7 @@ import requests
 # print(res.json())
 
 
-res = requests.get("http://127.0.0.1:5000/deliveries/1")
+res = requests.post("http://127.0.0.1:5000/operation/delivery/delivery_id=1,status=End")
 print(res.json())
 
 

@@ -8,6 +8,7 @@ from  drivers import *
 from  vehicles import *
 from  deliveries import *
 from  users import *
+from  operations import *
 
 
 
@@ -30,6 +31,7 @@ api.add_resource(Drivers, "/driver", "/driver/<user_id>", "/drivers")
 api.add_resource(Vehicles, "/vehicle", "/vehicle/<vehicle_id>", "/vehicles")
 api.add_resource(Deliveries, "/delivery", "/deliveries", "/deliveries/<driver_id>")
 api.add_resource(Users, "/user/<login>,<password>")
+api.add_resource(Operations, "/operation/delivery/delivery_id=<delivery_id>,status=<status>")
 
 # api.init_app(app)
 
