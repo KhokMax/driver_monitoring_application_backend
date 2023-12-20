@@ -39,8 +39,8 @@ import requests
 # print(res.json())
 
 
-# res = requests.get("http://127.0.0.1:5000/vehicles")
-# print(res.json())
+res = requests.get("http://127.0.0.1:5000/vehicles")
+print(res.json())
 
 # res = requests.get("http://driver-monitoring-application-d48766f2cbe0.herokuapp.com/vehicles")
 # print(res.json())
@@ -74,7 +74,7 @@ import requests
 # print(res.json())
 
 
-res = requests.post("http://127.0.0.1:5000/operation/delivery/delivery_id=1,status=End")
-print(res.json())
+# res = requests.post("http://127.0.0.1:5000/operation/delivery/delivery_id=1,status=End")
+# print(res.json())
 
 
