@@ -68,4 +68,30 @@ class Deliveries(Resource):
          
         return result_json_str
 
+
+    def get(self, driver_id):
+            try:
+                engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb", poolclass=pool.QueuePool)
+                connection = engine.connect()
+                
+                df = pd.read_sql(get_all_deliveries_by_driver.format(driver_id), connection)
+                
+                data = json.loads(df.to_json(orient="records"))
+                result_json_str = json.dumps({"deliveries": data})
+
+                connection.close()
+                engine.dispose()
+                    
+            except Exception as e:
+                try:
+                    connection.close()
+                    engine.dispose()
+                except Exception as e:
+                    print(e)
+                    return {"Exception": "404"}
+                
+                print(e)
+                return {"Exception": "404"}
+            
+            return result_json_str
         

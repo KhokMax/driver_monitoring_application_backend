@@ -67,7 +67,14 @@ import requests
 
 
 
-res = requests.get("http://127.0.0.1:5000/user/superuser,x2H8t2B8Zd")
+# res = requests.get("http://127.0.0.1:5000/user/superuser,x2H8t2B8Zd")
+# print(res.json())
+
+# res = requests.get("http://driver-monitoring-application-d48766f2cbe0.herokuapp.com/user/superuser,x2H8t2B8Zd")
+# print(res.json())
+
+
+res = requests.get("http://127.0.0.1:5000/deliveries/1")
 print(res.json())
 
 
