@@ -42,12 +42,13 @@ class Deliveries(Resource):
         return {"Response": "200"}
 
     
-    def get(self):
+    def get_all(self):
         try:
             engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb", poolclass=pool.QueuePool)
             connection = engine.connect()
             
             df = pd.read_sql(get_all_deliveries, connection)
+            print(df)
             
             data = json.loads(df.to_json(orient="records"))
             result_json_str = json.dumps({"deliveries": data})
@@ -69,7 +70,11 @@ class Deliveries(Resource):
         return result_json_str
 
 
-    def get(self, driver_id):
+    def get(self, driver_id=None):
+            
+            if driver_id == None:
+                return self.get_all()
+
             try:
                 engine = create_engine("postgresql+psycopg2://avnadmin:AVNS_zb-76Zov-eh6OfnbW-Z@driver-monitoring-application-db-khok-8eb3.a.aivencloud.com:19713/defaultdb", poolclass=pool.QueuePool)
                 connection = engine.connect()
