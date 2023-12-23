@@ -48,7 +48,6 @@ class Deliveries(Resource):
             connection = engine.connect()
             
             df = pd.read_sql(get_all_deliveries, connection)
-            print(df)
             
             data = json.loads(df.to_json(orient="records"))
             result_json_str = json.dumps({"deliveries": data})
