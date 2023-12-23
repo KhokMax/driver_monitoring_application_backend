@@ -15,6 +15,7 @@ SELECT *,
 	END 
 	AS delivery_status
 FROM deliveries
+ORDER BY create_date DESC
 """
 
 
@@ -35,6 +36,7 @@ SELECT *,
 	AS delivery_status
 FROM deliveries
 WHERE driver_id = '{}'
+ORDER BY create_date DESC
 """
 
 

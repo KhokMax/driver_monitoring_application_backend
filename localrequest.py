@@ -46,11 +46,14 @@ import requests
 # print(res.json())
 
 
-res = requests.get("http://127.0.0.1:5000/deliveries")
-print(res.json())
+# res = requests.get("http://127.0.0.1:5000/deliveries")
+# print(res.json())
 
 # res = requests.get("http://driver-monitoring-application-d48766f2cbe0.herokuapp.com/deliveries")
 # print(res.json())
+
+res = requests.get("http://driver-monitoring-application-d48766f2cbe0.herokuapp.com/deliveries/1")
+print(res.json())
 
 
 # data = {"delivery_name":"DelName","delivery_description":"description","deadline":'2023-11-2 6:23:11',"shipfrom_longitude":24.0,"shipfrom_latitude":13.0,"shipto_longitude":432.0,"shipto_latitude":3214.0,"shipto_address":"fwfw","shipfrom_address":"ewrwgwger","vehicle_id":"1","driver_id":"1"}
