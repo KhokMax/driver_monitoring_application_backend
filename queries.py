@@ -17,6 +17,8 @@ SELECT *,
 FROM deliveries
 """
 
+
+
 get_all_deliveries_by_driver = """
 SELECT *,
 	CASE 
@@ -36,11 +38,14 @@ WHERE driver_id = '{}'
 """
 
 
+
 post_new_driver = """
 INSERT INTO drivers(
 	user_id, driver_first_name, driver_last_name, driver_patronymic, driver_age, driver_rank, mobile_phone, mail, a1_category, a_category, b1_category, b_category, c1_category, c_categoty, d1_categoty, d_category, c1e_category, be_category, ce_category, d1e_category, de_category)
 VALUES (:driver_first_name, :driver_last_name:, :driver_patronymic, :driver_age, :driver_rank:, :mobile_phone, :mail, :a1_category, :a_category, :b1_category, :b_category, :c1_category, :c_categoty, :d1_categoty, :d_category, :c1e_category, :be_category:, :ce_category, :d1e_category, :de_category, :user_id)
 """
+
+
 
 select_all_drivers = """
 select user_id,
@@ -79,6 +84,7 @@ ON drivers.user_id = operations_facts_1.driver_id
 WHERE alive_flag = true"""
 
 
+
 select_all_vehicles = """select vehicles.vehicle_id, vehicle_name, operations_facts_1.vehicle_status, max_distance, fuel_per_100_km, capacity_kg, license_category, vehicle_category, 
 	CASE
 		WHEN delivery_status = 'in progress'
@@ -96,7 +102,17 @@ ON vehicles.vehicle_id = operations_facts_1.vehicle_id
 WHERE alive_flag = true"""
 
 
-change_delivery_status = """INSERT INTO operations_facts (vehicle_id, vehicle_status, driver_id, delivery_id, delivery_status, operation_date, operation_time)
+
+change_delivery_status = """
+INSERT INTO operations_facts (vehicle_id, vehicle_status, driver_id, delivery_id, delivery_status, operation_date, operation_time)
 SELECT vehicle_id, 'Good', driver_id, delivery_id, '{}', CURRENT_DATE + INTERVAL '2 hours', CURRENT_TIME + INTERVAL '2 hours'
 FROM deliveries
 WHERE delivery_id = '{}'"""
+
+
+select_last_vehicle_location = """
+SELECT * FROM vehicle_locations
+WHERE vehicle_id = '{}'
+ORDER BY loc_time DESC
+LIMIT 1
+"""
